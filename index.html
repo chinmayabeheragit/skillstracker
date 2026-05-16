@@ -4,165 +4,179 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Skill Tracker 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#08080d;--bg2:#0f0f18;--bg3:#17171f;--bg4:#1e1e28;
-  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
-  --text:#eeeef5;--text2:#8888a8;--text3:#44445a;
-  --accent:#7c6aff;--accent2:#a89bff;
-  --green:#22c55e;--green-bg:rgba(34,197,94,0.1);
-  --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);
-  --red:#ef4444;--red-bg:rgba(239,68,68,0.1);
-  --blue:#60a5fa;--blue-bg:rgba(96,165,250,0.1);
-  --cyan:#22d3ee;--cyan-bg:rgba(34,211,238,0.1);
-  --purple:#c084fc;--purple-bg:rgba(192,132,252,0.1);
-  --r:10px;--r2:7px;
+  --bg:#07080c;--bg2:#0d0e15;--bg3:#13141e;--bg4:#1a1b27;--bg5:#212230;
+  --border:rgba(255,255,255,0.05);--border2:rgba(255,255,255,0.1);--border3:rgba(255,255,255,0.18);
+  --text:#e8e9f5;--text2:#7e8099;--text3:#3e4055;
+  --accent:#5b6aff;--accent2:#8b96ff;--accent-glow:rgba(91,106,255,0.18);
+  --green:#1fd674;--green-bg:rgba(31,214,116,0.08);--green-border:rgba(31,214,116,0.2);
+  --amber:#f0a500;--amber-bg:rgba(240,165,0,0.08);--amber-border:rgba(240,165,0,0.2);
+  --red:#ff4d6a;--red-bg:rgba(255,77,106,0.08);--red-border:rgba(255,77,106,0.2);
+  --blue:#4da6ff;--blue-bg:rgba(77,166,255,0.08);--blue-border:rgba(77,166,255,0.2);
+  --cyan:#00d4c8;--cyan-bg:rgba(0,212,200,0.08);--cyan-border:rgba(0,212,200,0.2);
+  --purple:#c97bff;--purple-bg:rgba(201,123,255,0.08);--purple-border:rgba(201,123,255,0.2);
+  --r:10px;--r2:7px;--r3:5px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
 
-.topnav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px;background:rgba(8,8,13,0.95);border-bottom:1px solid var(--border);}
-.logo{font-size:15px;font-weight:700;color:var(--accent2);}
-.logo em{color:var(--text3);font-style:normal;font-weight:400;}
+/* Grain overlay */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4;}
+
+.topnav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:54px;background:rgba(7,8,12,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-mark{width:26px;height:26px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;}
+.logo-text{font-size:14px;font-weight:700;letter-spacing:-0.02em;}
+.logo-text em{color:var(--text3);font-style:normal;}
+.status-dot{display:flex;align-items:center;gap:6px;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--green);padding:4px 10px;border-radius:99px;border:1px solid var(--green-border);background:var(--green-bg);}
+.status-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;}
 .nav-right{display:flex;align-items:center;gap:8px;}
-.sync-pill{font-size:11px;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:99px;border:1px solid var(--border2);color:var(--text3);}
-.sync-pill.ok{color:var(--green);border-color:rgba(34,197,94,0.3);}
-.sync-pill.busy{color:var(--amber);border-color:rgba(245,158,11,0.3);}
-.sync-pill.err{color:var(--red);border-color:rgba(239,68,68,0.3);}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--r2);border:1px solid var(--border2);background:var(--bg3);color:var(--text2);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.15s;}
-.btn:hover{border-color:rgba(255,255,255,0.2);color:var(--text);}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
-.btn.primary:hover{opacity:0.85;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:var(--r2);border:1px solid var(--border2);background:var(--bg3);color:var(--text2);font-family:'Syne',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;transition:all 0.15s;letter-spacing:0.01em;}
+.btn:hover{border-color:var(--border3);color:var(--text);}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 20px var(--accent-glow);}
+.btn.primary:hover{opacity:0.88;}
 
-.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 56px);}
-.sidebar{border-right:1px solid var(--border);padding:1rem 0.75rem;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;}
+.layout{display:grid;grid-template-columns:210px 1fr;min-height:calc(100vh - 54px);position:relative;z-index:1;}
+.sidebar{border-right:1px solid var(--border);padding:1.1rem 0.75rem;position:sticky;top:54px;height:calc(100vh - 54px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--bg5) transparent;}
 .sidebar::-webkit-scrollbar{width:3px;}
-.sidebar::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:99px;}
 
-.prog-ring{padding:0.75rem;margin-bottom:0.75rem;text-align:center;}
-.ring-wrap{position:relative;width:80px;height:80px;margin:0 auto 0.5rem;}
-.ring-svg{width:80px;height:80px;transform:rotate(-90deg);}
-.ring-bg{fill:none;stroke:var(--bg4);stroke-width:5;}
-.ring-arc{fill:none;stroke:var(--accent);stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset 0.5s ease;}
-.ring-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:17px;font-weight:700;}
-.prog-lbl{font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+/* Ring */
+.prog-ring{padding:1rem 0.5rem 0.85rem;text-align:center;margin-bottom:0.5rem;}
+.ring-wrap{position:relative;width:86px;height:86px;margin:0 auto 0.6rem;}
+.ring-svg{width:86px;height:86px;transform:rotate(-90deg);}
+.ring-bg{fill:none;stroke:var(--bg4);stroke-width:6;}
+.ring-arc{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 0.6s cubic-bezier(.4,0,.2,1);}
+.ring-arc2{fill:none;stroke:var(--green);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 0.6s cubic-bezier(.4,0,.2,1);}
+.ring-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:19px;font-weight:800;letter-spacing:-0.04em;}
+.prog-lbl{font-size:10.5px;color:var(--text3);font-family:'JetBrains Mono',monospace;}
 
-.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:1rem;}
-.mstat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:8px;text-align:center;}
-.mstat .n{font-size:18px;font-weight:700;}
-.mstat .l{font-size:10px;color:var(--text3);font-family:'JetBrains Mono',monospace;margin-top:1px;}
+.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:1rem;}
+.mstat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:7px 8px;text-align:center;}
+.mstat .n{font-size:19px;font-weight:800;letter-spacing:-0.04em;}
+.mstat .l{font-size:9.5px;color:var(--text3);font-family:'JetBrains Mono',monospace;margin-top:1px;text-transform:uppercase;letter-spacing:0.05em;}
 
-.nav-sec{font-size:10px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;padding:0 8px;margin:0.75rem 0 4px;font-family:'JetBrains Mono',monospace;}
-.nav-item{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:var(--r2);cursor:pointer;font-size:12.5px;color:var(--text2);transition:all 0.12s;margin-bottom:2px;}
+.nav-sec{font-size:9.5px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;padding:0 8px;margin:0.85rem 0 5px;font-family:'JetBrains Mono',monospace;}
+.nav-item{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:var(--r2);cursor:pointer;font-size:12px;color:var(--text2);transition:all 0.12s;margin-bottom:2px;gap:6px;}
 .nav-item:hover{background:var(--bg3);color:var(--text);}
-.nav-item.active{background:rgba(124,106,255,0.12);color:var(--accent2);}
-.nav-item .cn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:128px;}
-.nav-badge{font-size:10px;font-family:'JetBrains Mono',monospace;background:var(--bg4);padding:1px 6px;border-radius:99px;color:var(--text3);flex-shrink:0;}
-.nav-item.active .nav-badge{background:rgba(124,106,255,0.2);color:var(--accent2);}
+.nav-item.active{background:rgba(91,106,255,0.1);color:var(--accent2);}
+.nav-item .cn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;}
+.nav-badge{font-size:9.5px;font-family:'JetBrains Mono',monospace;background:var(--bg4);padding:1px 6px;border-radius:99px;color:var(--text3);flex-shrink:0;}
+.nav-item.active .nav-badge{background:rgba(91,106,255,0.18);color:var(--accent2);}
+.nav-prog{height:2px;background:var(--bg5);border-radius:99px;margin:3px 10px 5px;overflow:hidden;}
+.nav-prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width 0.4s;}
+.nav-item.active + .nav-prog .nav-prog-fill{background:var(--accent2);}
 
 .content{padding:1.25rem 1.5rem;}
-.toolbar{display:flex;align-items:center;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap;}
-.search{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:7px 12px;width:200px;outline:none;transition:border-color 0.2s;}
-.search:focus{border-color:var(--accent);}
+.toolbar{display:flex;align-items:center;gap:7px;margin-bottom:1.25rem;flex-wrap:wrap;}
+.search{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);color:var(--text);font-family:'Syne',sans-serif;font-size:13px;padding:7px 12px;width:190px;outline:none;transition:border-color 0.18s;}
+.search:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
 .search::placeholder{color:var(--text3);}
-.fsel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);color:var(--text2);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:7px 10px;outline:none;cursor:pointer;}
+.fsel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);color:var(--text2);font-family:'Syne',sans-serif;font-size:12.5px;padding:7px 10px;outline:none;cursor:pointer;transition:border-color 0.15s;}
+.fsel:focus{border-color:var(--accent);}
 .fsel option{background:var(--bg2);}
+.toolbar-right{margin-left:auto;display:flex;gap:7px;align-items:center;}
+.count-badge{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text3);padding:5px 10px;border:1px solid var(--border);border-radius:99px;background:var(--bg2);}
 
-.section{margin-bottom:1.75rem;}
-.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
-.sec-title{font-size:13px;font-weight:600;}
-.sec-meta{font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+.section{margin-bottom:2rem;}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
+.sec-title{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text2);}
+.sec-meta{font-size:10.5px;color:var(--text3);font-family:'JetBrains Mono',monospace;}
 .sec-bar{height:2px;background:var(--bg4);border-radius:99px;margin-bottom:10px;overflow:hidden;}
-.sec-bar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width 0.4s;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;}
+.sec-bar-fill{height:100%;border-radius:99px;transition:width 0.5s cubic-bezier(.4,0,.2,1);}
 
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;display:flex;align-items:flex-start;gap:10px;transition:border-color 0.15s,transform 0.15s;position:relative;}
-.card:hover{border-color:var(--border2);transform:translateY(-1px);}
-.card.done{background:var(--green-bg);border-color:rgba(34,197,94,0.2);}
-.card.done .cname{color:rgba(255,255,255,0.3);text-decoration:line-through;text-decoration-color:rgba(255,255,255,0.15);}
-.card.in_progress{border-color:rgba(192,132,252,0.25);background:rgba(192,132,252,0.04);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:7px;}
 
-.ckbtn{width:20px;height:20px;min-width:20px;border-radius:50%;border:1.5px solid var(--border2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all 0.15s;font-size:10px;color:transparent;font-family:'JetBrains Mono',monospace;}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:11px 13px;display:flex;align-items:flex-start;gap:9px;transition:border-color 0.15s,transform 0.15s,box-shadow 0.15s;position:relative;cursor:default;}
+.card:hover{border-color:var(--border2);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,0.3);}
+.card.done{background:rgba(31,214,116,0.04);border-color:var(--green-border);}
+.card.done .cname{color:rgba(255,255,255,0.25);text-decoration:line-through;text-decoration-color:rgba(255,255,255,0.12);}
+.card.in_progress{border-color:var(--purple-border);background:rgba(201,123,255,0.04);}
+
+.ckbtn{width:19px;height:19px;min-width:19px;border-radius:50%;border:1.5px solid var(--border2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:all 0.15s;font-size:9px;color:transparent;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
 .card.done .ckbtn{background:var(--green);border-color:var(--green);color:#fff;}
-.card.in_progress .ckbtn{background:var(--purple-bg);border-color:var(--purple);color:var(--purple);}
-.ckbtn:hover{border-color:var(--green);background:var(--green-bg);}
+.card.in_progress .ckbtn{background:var(--purple-bg);border-color:var(--purple);color:var(--purple);font-size:8px;}
+.ckbtn:hover{border-color:var(--green);background:var(--green-bg);color:var(--green);}
+.card.done .ckbtn:hover{background:var(--amber);border-color:var(--amber);}
 
 .cbody{flex:1;min-width:0;}
-.cname{font-size:12.5px;line-height:1.5;margin-bottom:5px;word-break:break-word;}
-.ctags{display:flex;gap:5px;flex-wrap:wrap;}
-.tag{font-size:10px;padding:2px 7px;border-radius:99px;font-weight:600;font-family:'JetBrains Mono',monospace;}
-.p-critical{background:var(--red-bg);color:var(--red);}
-.p-important{background:var(--amber-bg);color:var(--amber);}
-.p-high{background:var(--blue-bg);color:var(--blue);}
-.p-medium{background:var(--bg4);color:var(--text3);}
-.p-metlife{background:var(--cyan-bg);color:var(--cyan);}
-.s-in_progress{background:var(--purple-bg);color:var(--purple);}
-.s-done{background:var(--green-bg);color:var(--green);}
+.cname{font-size:12px;line-height:1.5;margin-bottom:6px;word-break:break-word;font-weight:500;}
+.ctags{display:flex;gap:4px;flex-wrap:wrap;}
+.tag{font-size:9.5px;padding:2px 6px;border-radius:4px;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:0.02em;}
+.p-critical{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+.p-important{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.p-high{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.p-medium{background:var(--bg4);color:var(--text3);border:1px solid var(--border);}
+.p-metlife{background:var(--cyan-bg);color:var(--cyan);border:1px solid var(--cyan-border);}
+.s-in_progress{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border);}
+.s-done{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
 
 .cactions{display:flex;gap:3px;opacity:0;transition:opacity 0.12s;flex-shrink:0;}
 .card:hover .cactions{opacity:1;}
-.act{width:26px;height:26px;border-radius:5px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.12s;}
+.act{width:24px;height:24px;border-radius:4px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.12s;}
 .act:hover{border-color:var(--border2);color:var(--text);}
 .act.del:hover{border-color:var(--red);color:var(--red);background:var(--red-bg);}
-.act svg{width:13px;height:13px;pointer-events:none;}
+.act svg{width:12px;height:12px;pointer-events:none;}
 
 /* Modal */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:1000;display:none;align-items:center;justify-content:center;padding:1.5rem;}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;padding:1.5rem;}
 .overlay.open{display:flex;}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:1.75rem;width:100%;max-width:460px;animation:mIn 0.18s ease;}
-@keyframes mIn{from{opacity:0;transform:translateY(8px) scale(0.97);}to{opacity:1;transform:none;}}
-.mtitle{font-size:16px;font-weight:700;margin-bottom:1.2rem;}
-.fg{margin-bottom:0.85rem;}
-.fl{font-size:11px;color:var(--text2);margin-bottom:5px;display:block;font-family:'JetBrains Mono',monospace;}
-.fi,.fta,.fse{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13.5px;padding:9px 12px;outline:none;transition:border-color 0.15s;}
-.fi:focus,.fta:focus,.fse:focus{border-color:var(--accent);}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:1.6rem;width:100%;max-width:450px;animation:mIn 0.2s cubic-bezier(.34,1.56,.64,1);}
+@keyframes mIn{from{opacity:0;transform:translateY(10px) scale(0.96);}to{opacity:1;transform:none;}}
+.mtitle{font-size:15px;font-weight:800;margin-bottom:1.1rem;letter-spacing:-0.02em;}
+.fg{margin-bottom:0.8rem;}
+.fl{font-size:10.5px;color:var(--text2);margin-bottom:5px;display:block;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.06em;}
+.fi,.fta,.fse{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);color:var(--text);font-family:'Syne',sans-serif;font-size:13px;padding:8px 11px;outline:none;transition:border-color 0.15s,box-shadow 0.15s;}
+.fi:focus,.fta:focus,.fse:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
 .fi::placeholder,.fta::placeholder{color:var(--text3);}
-.fta{resize:vertical;min-height:68px;}
-.fse option{background:var(--bg2);}
-
-/* Priority chips */
+.fta{resize:vertical;min-height:60px;}
+.fse option{background:var(--bg3);}
 .prow{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;}
-.pchip{padding:6px 2px;border-radius:var(--r2);border:1px solid var(--border);background:var(--bg3);color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;cursor:pointer;text-align:center;transition:all 0.12s;}
+.pchip{padding:7px 2px;border-radius:var(--r3);border:1px solid var(--border);background:var(--bg3);color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:600;cursor:pointer;text-align:center;transition:all 0.12s;letter-spacing:0.02em;}
 .pchip:hover{border-color:var(--border2);color:var(--text2);}
 .pchip.on-critical{background:var(--red-bg);border-color:var(--red);color:var(--red);}
 .pchip.on-important{background:var(--amber-bg);border-color:var(--amber);color:var(--amber);}
 .pchip.on-high{background:var(--blue-bg);border-color:var(--blue);color:var(--blue);}
 .pchip.on-medium{background:var(--bg4);border-color:var(--border2);color:var(--text2);}
 .pchip.on-metlife{background:var(--cyan-bg);border-color:var(--cyan);color:var(--cyan);}
-
-.mfoot{display:flex;gap:8px;justify-content:flex-end;margin-top:1.2rem;}
-.bcancel{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);color:var(--text2);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:8px 18px;cursor:pointer;}
+.mfoot{display:flex;gap:8px;justify-content:flex-end;margin-top:1.1rem;}
+.bcancel{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);color:var(--text2);font-family:'Syne',sans-serif;font-size:12.5px;padding:8px 16px;cursor:pointer;font-weight:600;}
 .bcancel:hover{border-color:var(--border2);color:var(--text);}
-.bsave{background:var(--accent);border:none;border-radius:var(--r2);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;padding:8px 22px;cursor:pointer;}
-.bsave:hover{opacity:0.85;}
+.bsave{background:var(--accent);border:none;border-radius:var(--r2);color:#fff;font-family:'Syne',sans-serif;font-size:12.5px;font-weight:700;padding:8px 20px;cursor:pointer;box-shadow:0 0 16px var(--accent-glow);}
+.bsave:hover{opacity:0.88;}
 .bsave:disabled{opacity:0.4;cursor:not-allowed;}
 
-/* Error banner */
-.errbanner{background:var(--red-bg);border:1px solid rgba(239,68,68,0.3);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1rem;font-size:13px;color:var(--red);display:none;}
-.errbanner.show{display:block;}
+/* Reset banner */
+.reset-wrap{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.btn-reset{background:var(--bg3);border:1px solid var(--red-border);border-radius:var(--r2);color:var(--red);font-family:'Syne',sans-serif;font-size:11.5px;font-weight:600;padding:5px 11px;cursor:pointer;transition:all 0.15s;}
+.btn-reset:hover{background:var(--red-bg);}
 
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);padding:10px 16px;font-size:13px;z-index:9999;transform:translateY(50px);opacity:0;transition:all 0.22s cubic-bezier(.4,0,.2,1);max-width:260px;}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);padding:10px 15px;font-size:12.5px;z-index:9999;transform:translateY(40px);opacity:0;transition:all 0.22s cubic-bezier(.4,0,.2,1);max-width:250px;font-weight:600;}
 .toast.show{transform:none;opacity:1;}
-.toast.ok{border-color:rgba(34,197,94,0.4);}
-.toast.fail{border-color:rgba(239,68,68,0.4);}
+.toast.ok{border-color:var(--green-border);color:var(--green);}
+.toast.fail{border-color:var(--red-border);color:var(--red);}
 
 .center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 1rem;gap:0.75rem;color:var(--text3);}
 .spin{width:20px;height:20px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:sp 0.7s linear infinite;}
 @keyframes sp{to{transform:rotate(360deg);}}
-.center p{font-size:13px;}
-.center b{font-size:15px;font-weight:600;color:var(--text2);}
 
-@media(max-width:680px){.layout{grid-template-columns:1fr;}.sidebar{display:none;}.search{width:100%;}}
+.confirm-modal{max-width:360px;}
+.confirm-msg{font-size:13px;color:var(--text2);margin-bottom:1.1rem;line-height:1.6;}
+
+@media(max-width:700px){.layout{grid-template-columns:1fr;}.sidebar{display:none;}.search{width:100%;}}
 </style>
 </head>
 <body>
 
 <nav class="topnav">
-  <div class="logo">skill<em>·</em>tracker <em>2026</em></div>
+  <div class="logo">
+    <div class="logo-mark">S</div>
+    <div class="logo-text">skill<em>·</em>tracker <em>2026</em></div>
+  </div>
   <div class="nav-right">
-    <span class="sync-pill busy" id="sync">connecting...</span>
-    <button class="btn" onclick="load()">↺ refresh</button>
+    <span class="status-dot">local storage</span>
     <button class="btn primary" onclick="openAdd()">+ add skill</button>
   </div>
 </nav>
@@ -171,9 +185,9 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
   <aside class="sidebar">
     <div class="prog-ring">
       <div class="ring-wrap">
-        <svg class="ring-svg" viewBox="0 0 80 80">
-          <circle class="ring-bg" cx="40" cy="40" r="34"/>
-          <circle class="ring-arc" id="rarc" cx="40" cy="40" r="34" stroke-dasharray="213.63" stroke-dashoffset="213.63"/>
+        <svg class="ring-svg" viewBox="0 0 86 86">
+          <circle class="ring-bg" cx="43" cy="43" r="36"/>
+          <circle class="ring-arc" id="rarc" cx="43" cy="43" r="36" stroke-dasharray="226.2" stroke-dashoffset="226.2"/>
         </svg>
         <div class="ring-num" id="rpct">0%</div>
       </div>
@@ -183,15 +197,14 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
       <div class="mstat"><div class="n" id="sd" style="color:var(--green)">0</div><div class="l">done</div></div>
       <div class="mstat"><div class="n" id="sr" style="color:var(--amber)">0</div><div class="l">left</div></div>
       <div class="mstat"><div class="n" id="sc" style="color:var(--red)">0</div><div class="l">critical</div></div>
-      <div class="mstat"><div class="n" id="sp2" style="color:var(--purple)">0</div><div class="l">in progress</div></div>
+      <div class="mstat"><div class="n" id="sp2" style="color:var(--purple)">0</div><div class="l">in prog</div></div>
     </div>
     <p class="nav-sec">categories</p>
     <div id="nav"></div>
   </aside>
   <main class="content">
-    <div class="errbanner" id="errbanner"></div>
     <div class="toolbar">
-      <input class="search" id="q" placeholder="search..." oninput="render()"/>
+      <input class="search" id="q" placeholder="🔍 search skills..." oninput="render()"/>
       <select class="fsel" id="fp" onchange="render()">
         <option value="">all priorities</option>
         <option value="critical">critical</option>
@@ -206,17 +219,21 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
         <option value="in_progress">in progress</option>
         <option value="done">done</option>
       </select>
+      <div class="toolbar-right">
+        <span class="count-badge" id="cnt">0 skills</span>
+        <button class="btn-reset" onclick="confirmReset()">↺ reset all</button>
+      </div>
     </div>
-    <div id="box"><div class="center"><div class="spin"></div><p>Connecting to Supabase...</p></div></div>
+    <div id="box"><div class="center"><div class="spin"></div></div></div>
   </main>
 </div>
 
-<!-- Modal -->
+<!-- Add/Edit Modal -->
 <div class="overlay" id="ov">
   <div class="modal">
     <div class="mtitle" id="mtitle">add skill</div>
     <div class="fg"><label class="fl">skill name *</label><textarea class="fta" id="fn" placeholder="e.g. Implement debounce from scratch" rows="2"></textarea></div>
-    <div class="fg"><label class="fl">category *</label><input class="fi" id="fcat" placeholder="e.g. JavaScript Core" list="cdl"/><datalist id="cdl"></datalist></div>
+    <div class="fg"><label class="fl">category *</label><input class="fi" id="fcat" placeholder="e.g. JavaScript" list="cdl"/><datalist id="cdl"></datalist></div>
     <div class="fg">
       <label class="fl">priority *</label>
       <div class="prow" id="prow">
@@ -242,225 +259,456 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
   </div>
 </div>
 
+<!-- Confirm Reset Modal -->
+<div class="overlay" id="ov-confirm">
+  <div class="modal confirm-modal">
+    <div class="mtitle">reset all progress?</div>
+    <p class="confirm-msg">This will reset ALL skills back to <strong>pending</strong>. Your custom added skills will stay. Only status is reset.</p>
+    <div class="mfoot">
+      <button class="bcancel" onclick="closeConfirm()">cancel</button>
+      <button class="bsave" style="background:var(--red);box-shadow:0 0 16px var(--red-bg);" onclick="doReset()">yes, reset</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-const URL  = 'https://citdgaebrwjlwpnzzvuq.supabase.co';
-const KEY  = 'sb_publishable_eKqbldxNkQBTCXEW6M3MiA_uWHdYUju';
+// ─── SEED DATA — All skills from the document ───────────────────────────────
+const SEED = [
+  // JavaScript
+  {id:'js1',category:'JavaScript',name:'Advanced JavaScript — Closures, Prototypes, this',priority:'critical',status:'pending',notes:''},
+  {id:'js2',category:'JavaScript',name:'Event Loop — Phases, Microtasks, Macrotasks',priority:'critical',status:'pending',notes:''},
+  {id:'js3',category:'JavaScript',name:'Async Patterns — Promises, async/await, error handling',priority:'critical',status:'pending',notes:''},
+  {id:'js4',category:'JavaScript',name:'Modern JS Syntax — Destructuring, Optional Chaining, ESM (ES2020–2024)',priority:'important',status:'pending',notes:''},
+  {id:'js5',category:'JavaScript',name:'Implement Promise.all from scratch',priority:'critical',status:'pending',notes:'Common ask at Atlassian, Canva, Google'},
+  {id:'js6',category:'JavaScript',name:'Implement Promise.race from scratch',priority:'critical',status:'pending',notes:''},
+  {id:'js7',category:'JavaScript',name:'Implement debounce from scratch',priority:'critical',status:'pending',notes:'Very common at all companies'},
+  {id:'js8',category:'JavaScript',name:'Implement throttle from scratch',priority:'critical',status:'pending',notes:'Very common at all companies'},
+  {id:'js9',category:'JavaScript',name:'WeakMap and WeakSet — use cases',priority:'high',status:'pending',notes:'Google, Meta'},
+  {id:'js10',category:'JavaScript',name:'The `this` keyword — 5 different contexts',priority:'critical',status:'pending',notes:'Amazon, Google, Meta'},
+  {id:'js11',category:'JavaScript',name:'call(), apply(), bind() with examples',priority:'critical',status:'pending',notes:''},
+  {id:'js12',category:'JavaScript',name:'Memoization — implement generic memoize function',priority:'important',status:'pending',notes:''},
+  {id:'js13',category:'JavaScript',name:'CommonJS (require) vs ES Modules (import) differences',priority:'important',status:'pending',notes:''},
+  {id:'js14',category:'JavaScript',name:'Prototypal inheritance vs classical inheritance',priority:'important',status:'pending',notes:'Google, Meta'},
+  {id:'js15',category:'JavaScript',name:'Optional chaining (?.) and nullish coalescing (??)',priority:'important',status:'pending',notes:''},
+  {id:'js16',category:'JavaScript',name:'Implement EventEmitter class from scratch',priority:'high',status:'pending',notes:''},
+  {id:'js17',category:'JavaScript',name:'Deep clone function — handle circular references',priority:'high',status:'pending',notes:'structuredClone() native API'},
+  // Node.js
+  {id:'nd1',category:'Node.js Core',name:'Node.js Runtime & V8 Internals',priority:'critical',status:'pending',notes:''},
+  {id:'nd2',category:'Node.js Core',name:'Event Loop phases in Node.js detail',priority:'critical',status:'pending',notes:'process.nextTick vs setImmediate'},
+  {id:'nd3',category:'Node.js Core',name:'Node.js Streams — Readable, Writable, Duplex, Transform',priority:'important',status:'pending',notes:'Google, Stripe'},
+  {id:'nd4',category:'Node.js Core',name:'Backpressure in streams — pipeline() vs pipe()',priority:'important',status:'pending',notes:'highWaterMark, flowing vs paused mode'},
+  {id:'nd5',category:'Node.js Core',name:'Clustering — multiple processes across CPU cores',priority:'important',status:'pending',notes:'cluster module + PM2'},
+  {id:'nd6',category:'Node.js Core',name:'Worker Threads — SharedArrayBuffer, CPU-intensive tasks',priority:'important',status:'pending',notes:''},
+  {id:'nd7',category:'Node.js Core',name:'Error Handling — uncaughtException, unhandledRejection',priority:'important',status:'pending',notes:'Custom error classes, Express 4-arg middleware'},
+  {id:'nd8',category:'Node.js Core',name:'Memory leak detection — clinic.js, heap snapshots',priority:'important',status:'pending',notes:'--inspect flag + Chrome DevTools'},
+  {id:'nd9',category:'Node.js Core',name:'UV_THREADPOOL_SIZE and libuv thread pool',priority:'high',status:'pending',notes:'Google, Cloudflare'},
+  {id:'nd10',category:'Node.js Core',name:'Module caching — what happens when require() is called',priority:'high',status:'pending',notes:''},
+  {id:'nd11',category:'Node.js Core',name:'Graceful shutdown in Node.js server',priority:'high',status:'pending',notes:'Amazon, Google, all prod roles'},
+  {id:'nd12',category:'Node.js Core',name:'Rate limiting implementation in Node.js API',priority:'important',status:'pending',notes:''},
+  {id:'nd13',category:'Node.js Core',name:'Performance — avoid sync operations in hot paths',priority:'important',status:'pending',notes:'fs.readFileSync, crypto.pbkdf2Sync'},
+  // TypeScript
+  {id:'ts1',category:'TypeScript',name:'Interfaces vs Types — extends vs union/intersection',priority:'critical',status:'pending',notes:''},
+  {id:'ts2',category:'TypeScript',name:'Generics — reusable typed logic',priority:'critical',status:'pending',notes:'function fn<T>(arg: T): T'},
+  {id:'ts3',category:'TypeScript',name:'Utility Types — Partial, Required, Pick, Omit, Record',priority:'critical',status:'pending',notes:''},
+  {id:'ts4',category:'TypeScript',name:'Decorators — @Injectable, @Controller, @Get, @Body',priority:'critical',status:'pending',notes:'NestJS decorators'},
+  {id:'ts5',category:'TypeScript',name:'Mapped Types — transform object types',priority:'important',status:'pending',notes:'{ [K in keyof T]: ... }'},
+  {id:'ts6',category:'TypeScript',name:'Conditional Types',priority:'important',status:'pending',notes:'type IsString<T> = T extends string ? true : false'},
+  // Frameworks
+  {id:'fw1',category:'Frameworks',name:'NestJS — Modules, DI, Guards, Interceptors, Pipes',priority:'critical',status:'pending',notes:'Request lifecycle: Middleware→Guards→Interceptors→Pipes→Controller'},
+  {id:'fw2',category:'Frameworks',name:'NestJS — Exception Filters, @Catch decorator',priority:'critical',status:'pending',notes:''},
+  {id:'fw3',category:'Frameworks',name:'Express / Fastify — Middleware, Routing, Plugins',priority:'high',status:'pending',notes:''},
+  {id:'fw4',category:'Frameworks',name:'Socket.io / WebSockets — real-time communication',priority:'high',status:'pending',notes:''},
+  // Auth & Security
+  {id:'au1',category:'Auth & Security',name:'JWT — HS256/RS256, access tokens, refresh token rotation',priority:'critical',status:'pending',notes:'httpOnly cookies, never localStorage'},
+  {id:'au2',category:'Auth & Security',name:'OAuth2 + Passport.js integration',priority:'critical',status:'pending',notes:''},
+  {id:'au3',category:'Auth & Security',name:'Helmet.js — 11 security headers',priority:'important',status:'pending',notes:'X-XSS-Protection, HSTS, etc.'},
+  {id:'au4',category:'Auth & Security',name:'CORS — whitelist origins, no wildcard in prod',priority:'important',status:'pending',notes:''},
+  {id:'au5',category:'Auth & Security',name:'Rate limiting — express-rate-limit / @nestjs/throttler',priority:'important',status:'pending',notes:'Crucial for auth endpoints'},
+  {id:'au6',category:'Auth & Security',name:'Zod validation — validate and parse all incoming data',priority:'important',status:'pending',notes:'Preferred over Joi in 2026'},
+  {id:'au7',category:'Auth & Security',name:'bcrypt / argon2 — password hashing',priority:'critical',status:'pending',notes:'bcrypt rounds: 10+, argon2 is stronger'},
+  {id:'au8',category:'Auth & Security',name:'SQL injection prevention — parameterized queries / ORM',priority:'critical',status:'pending',notes:'Prisma handles this'},
+  {id:'au9',category:'Auth & Security',name:'CSRF protection — double-submit cookie pattern',priority:'important',status:'pending',notes:''},
+  {id:'au10',category:'Auth & Security',name:'OWASP Top 10 — all 10 vulnerabilities',priority:'critical',status:'pending',notes:'Every enterprise company expects this'},
+  {id:'au11',category:'Auth & Security',name:'Supply chain security — npm audit, Snyk, Dependabot',priority:'high',status:'pending',notes:''},
+  {id:'au12',category:'Auth & Security',name:'Data encryption — at rest and in transit',priority:'high',status:'pending',notes:''},
+  // API Design
+  {id:'api1',category:'API Design',name:'REST API Design — Versioning, Status Codes, Pagination',priority:'important',status:'pending',notes:'Cursor-based vs offset pagination'},
+  {id:'api2',category:'API Design',name:'GraphQL — Schema, Resolvers, Apollo Server',priority:'high',status:'pending',notes:''},
+  {id:'api3',category:'API Design',name:'OpenAPI / Swagger documentation',priority:'high',status:'pending',notes:''},
+  {id:'api4',category:'API Design',name:'gRPC basics — used in microservices',priority:'high',status:'pending',notes:'Google, Uber, fintech'},
+  {id:'api5',category:'API Design',name:'tRPC — gaining traction in TypeScript stacks 2026',priority:'high',status:'pending',notes:''},
+  {id:'api6',category:'API Design',name:'WebSockets vs SSE vs Long Polling — when to use each',priority:'high',status:'pending',notes:''},
+  // Databases
+  {id:'db1',category:'Databases',name:'PostgreSQL — Schema, Indexes, Joins, Transactions',priority:'critical',status:'pending',notes:'EXPLAIN ANALYZE before saying query is optimized'},
+  {id:'db2',category:'Databases',name:'PostgreSQL — B-tree, GIN, BRIN, Partial, Composite indexes',priority:'critical',status:'pending',notes:'Covering index with INCLUDE'},
+  {id:'db3',category:'Databases',name:'Prisma ORM — Models, Migrations, Relations, Type Safety',priority:'critical',status:'pending',notes:'N+1 problem, prisma.$transaction'},
+  {id:'db4',category:'Databases',name:'ACID properties with examples',priority:'critical',status:'pending',notes:'Amazon, Google, all DB roles'},
+  {id:'db5',category:'Databases',name:'Database transactions and isolation levels',priority:'critical',status:'pending',notes:''},
+  {id:'db6',category:'Databases',name:'Database normalization — 1NF, 2NF, 3NF',priority:'important',status:'pending',notes:'Asked in interviews'},
+  {id:'db7',category:'Databases',name:'Connection pooling — PgBouncer, Prisma pool',priority:'important',status:'pending',notes:'Default max 10'},
+  {id:'db8',category:'Databases',name:'CAP theorem — CP vs AP systems examples',priority:'important',status:'pending',notes:'Amazon, Google, all DS roles'},
+  {id:'db9',category:'Databases',name:'MongoDB + Mongoose — Aggregation Pipeline',priority:'high',status:'pending',notes:''},
+  {id:'db10',category:'Databases',name:'Zero-downtime migration strategy',priority:'high',status:'pending',notes:'Production migration patterns'},
+  // Redis & Caching
+  {id:'rc1',category:'Redis & Caching',name:'Redis — Caching, Sessions, Pub/Sub, Rate Limiting',priority:'important',status:'pending',notes:''},
+  {id:'rc2',category:'Redis & Caching',name:'BullMQ — job queues with Redis',priority:'high',status:'pending',notes:'Retry, dead-letter, BullBoard dashboard'},
+  {id:'rc3',category:'Redis & Caching',name:'Cache-Aside (Lazy) pattern',priority:'important',status:'pending',notes:'Most common caching pattern'},
+  {id:'rc4',category:'Redis & Caching',name:'Write-Through and Write-Behind patterns',priority:'high',status:'pending',notes:''},
+  {id:'rc5',category:'Redis & Caching',name:'Cache Stampede prevention',priority:'high',status:'pending',notes:'Mutex/lock or probabilistic early expiry'},
+  // DSA
+  {id:'dsa1',category:'DSA',name:'Two Pointers — Two Sum, 3Sum, Container With Most Water',priority:'critical',status:'pending',notes:''},
+  {id:'dsa2',category:'DSA',name:'Sliding Window — Max Sum Subarray, Longest Substring Without Repeat',priority:'critical',status:'pending',notes:''},
+  {id:'dsa3',category:'DSA',name:'Binary Search — Rotated Array, Find Peak Element',priority:'critical',status:'pending',notes:''},
+  {id:'dsa4',category:'DSA',name:'BFS/DFS — Level Order, Word Ladder, Number of Islands',priority:'critical',status:'pending',notes:''},
+  {id:'dsa5',category:'DSA',name:'Dynamic Programming — Coin Change, LCS, Knapsack, Edit Distance',priority:'important',status:'pending',notes:''},
+  {id:'dsa6',category:'DSA',name:'Backtracking — Subsets, Permutations, Combination Sum, N-Queens',priority:'important',status:'pending',notes:''},
+  {id:'dsa7',category:'DSA',name:'Greedy — Jump Game, Gas Station, Activity Selection',priority:'important',status:'pending',notes:''},
+  {id:'dsa8',category:'DSA',name:'Heap/Priority Queue — Kth Largest, Top K Frequent, Merge K Sorted Lists',priority:'important',status:'pending',notes:''},
+  {id:'dsa9',category:'DSA',name:'Monotonic Stack — Daily Temperatures, Largest Rectangle',priority:'high',status:'pending',notes:''},
+  {id:'dsa10',category:'DSA',name:'Union-Find (DSU) — Number of Provinces, Redundant Connection',priority:'high',status:'pending',notes:''},
+  {id:'dsa11',category:'DSA',name:'Trie — Implement Trie, Word Search II',priority:'high',status:'pending',notes:''},
+  {id:'dsa12',category:'DSA',name:'Intervals — Merge Intervals, Meeting Rooms, Insert Interval',priority:'high',status:'pending',notes:''},
+  {id:'dsa13',category:'DSA',name:'Promise throttling — run max K promises at a time',priority:'important',status:'pending',notes:'Node-specific DSA'},
+  {id:'dsa14',category:'DSA',name:'Retry with exponential backoff — async with N retries',priority:'important',status:'pending',notes:'Node-specific DSA'},
+  {id:'dsa15',category:'DSA',name:'Rate limiter — N requests per second (sliding window)',priority:'important',status:'pending',notes:'In-memory or Redis'},
+  // System Design
+  {id:'sd1',category:'System Design',name:'RESHADE framework — Requirements, Estimation, Schema, High-Level, API, Deep Dive, Enhancements',priority:'critical',status:'pending',notes:''},
+  {id:'sd2',category:'System Design',name:'Load Balancing — L4 vs L7, Round-robin, least connections, IP hash',priority:'critical',status:'pending',notes:''},
+  {id:'sd3',category:'System Design',name:'API Gateway — auth, rate limiting, SSL termination, routing',priority:'critical',status:'pending',notes:''},
+  {id:'sd4',category:'System Design',name:'Database Sharding & Replication — horizontal vs vertical',priority:'critical',status:'pending',notes:'Read replicas'},
+  {id:'sd5',category:'System Design',name:'Message Queues — Kafka, RabbitMQ, SQS, BullMQ',priority:'high',status:'pending',notes:'Kafka: high-throughput, durable, partitioned'},
+  {id:'sd6',category:'System Design',name:'Rate Limiting — token bucket, sliding window, fixed window',priority:'important',status:'pending',notes:''},
+  {id:'sd7',category:'System Design',name:'Circuit Breaker — Open/Half-Open/Closed states',priority:'important',status:'pending',notes:'Prevent cascade failures'},
+  {id:'sd8',category:'System Design',name:'Event Sourcing & CQRS — immutable event log, replay state',priority:'important',status:'pending',notes:''},
+  {id:'sd9',category:'System Design',name:'Distributed Transactions — Saga pattern (Choreography vs Orchestration)',priority:'important',status:'pending',notes:''},
+  {id:'sd10',category:'System Design',name:'Design URL Shortener (bit.ly) — 100M URLs',priority:'critical',status:'pending',notes:'Amazon, Google, Atlassian'},
+  {id:'sd11',category:'System Design',name:'Design Real-time Chat App (WhatsApp scale)',priority:'critical',status:'pending',notes:'Meta, Amazon, Atlassian'},
+  {id:'sd12',category:'System Design',name:'Design Notification System — push, email, SMS at scale',priority:'important',status:'pending',notes:'Amazon, Airbnb, Uber'},
+  {id:'sd13',category:'System Design',name:'Design File Storage Service (like S3)',priority:'important',status:'pending',notes:'Amazon, Dropbox, Box'},
+  {id:'sd14',category:'System Design',name:'Design Insurance Claims Processing System (MetLife)',priority:'metlife',status:'pending',notes:'MetLife-specific'},
+  // Observability
+  {id:'ob1',category:'Observability',name:'OpenTelemetry — distributed tracing (2026 standard)',priority:'critical',status:'pending',notes:''},
+  {id:'ob2',category:'Observability',name:'Pino logging — structured logging patterns',priority:'high',status:'pending',notes:'Performance logging for Node.js'},
+  {id:'ob3',category:'Observability',name:'Sentry — error tracking in production',priority:'high',status:'pending',notes:'Very common in production'},
+  {id:'ob4',category:'Observability',name:'SLI / SLO / SLA — definitions and implementation',priority:'important',status:'pending',notes:''},
+  {id:'ob5',category:'Observability',name:'Correlation IDs across microservices',priority:'high',status:'pending',notes:''},
+  // Testing
+  {id:'te1',category:'Testing',name:'Unit Testing — Jest/Vitest, mock dependencies',priority:'important',status:'pending',notes:''},
+  {id:'te2',category:'Testing',name:'Integration Testing — Supertest + Jest, test DB',priority:'important',status:'pending',notes:'70-80% coverage target'},
+  {id:'te3',category:'Testing',name:'E2E Testing — NestJS built-in E2E test setup',priority:'high',status:'pending',notes:''},
+  {id:'te4',category:'Testing',name:'TDD basics — Red → Green → Refactor cycle',priority:'high',status:'pending',notes:''},
+  // Architecture
+  {id:'ar1',category:'Architecture & Patterns',name:'SOLID Principles — all 5 principles',priority:'critical',status:'pending',notes:'Comes up constantly in mid/senior interviews'},
+  {id:'ar2',category:'Architecture & Patterns',name:'Design Patterns — Factory, Singleton, Observer, Repository, Strategy',priority:'critical',status:'pending',notes:''},
+  {id:'ar3',category:'Architecture & Patterns',name:'Clean Code principles — DRY, KISS, YAGNI',priority:'important',status:'pending',notes:'Robert Martin'},
+  {id:'ar4',category:'Architecture & Patterns',name:'Hexagonal Architecture (Ports & Adapters)',priority:'important',status:'pending',notes:''},
+  {id:'ar5',category:'Architecture & Patterns',name:'Domain Driven Design (DDD) — bounded contexts, aggregates',priority:'important',status:'pending',notes:'Senior level thinking'},
+  {id:'ar6',category:'Architecture & Patterns',name:'BFF Pattern — Backend for Frontend',priority:'high',status:'pending',notes:''},
+  {id:'ar7',category:'Architecture & Patterns',name:'Strangler Fig Pattern — monolith to microservices',priority:'high',status:'pending',notes:''},
+  // Networking
+  {id:'nw1',category:'Networking',name:'HTTP/1.1 vs HTTP/2 vs HTTP/3 — differences',priority:'important',status:'pending',notes:''},
+  {id:'nw2',category:'Networking',name:'TCP vs UDP basics',priority:'important',status:'pending',notes:''},
+  {id:'nw3',category:'Networking',name:'TLS/SSL handshake — how HTTPS actually works',priority:'important',status:'pending',notes:''},
+  {id:'nw4',category:'Networking',name:'DNS resolution process',priority:'high',status:'pending',notes:''},
+  {id:'nw5',category:'Networking',name:'CDN — Cloudflare, AWS CloudFront caching, edge computing',priority:'high',status:'pending',notes:''},
+  {id:'nw6',category:'Networking',name:'Reverse proxy — Nginx basic config',priority:'high',status:'pending',notes:''},
+  // Cloud AWS
+  {id:'aws1',category:'AWS',name:'EC2, ECS/EKS, Lambda — compute services',priority:'important',status:'pending',notes:''},
+  {id:'aws2',category:'AWS',name:'S3 — object storage, static assets, pre-signed URLs',priority:'important',status:'pending',notes:''},
+  {id:'aws3',category:'AWS',name:'RDS — managed PostgreSQL, Multi-AZ backups',priority:'important',status:'pending',notes:''},
+  {id:'aws4',category:'AWS',name:'ElastiCache — managed Redis/Memcached',priority:'important',status:'pending',notes:''},
+  {id:'aws5',category:'AWS',name:'SQS + SNS — managed queues and fan-out messaging',priority:'high',status:'pending',notes:''},
+  {id:'aws6',category:'AWS',name:'CloudWatch — logging, metrics, alarms',priority:'high',status:'pending',notes:''},
+  {id:'aws7',category:'AWS',name:'IAM — roles, policies, least privilege',priority:'important',status:'pending',notes:''},
+  {id:'aws8',category:'AWS',name:'API Gateway — HTTP/WebSocket API front door',priority:'high',status:'pending',notes:''},
+  // Azure
+  {id:'az1',category:'Azure (MetLife)',name:'Azure App Service — deploy Node.js APIs',priority:'metlife',status:'pending',notes:'Slots for zero-downtime deployments'},
+  {id:'az2',category:'Azure (MetLife)',name:'Azure Functions — serverless, event-driven compute',priority:'metlife',status:'pending',notes:''},
+  {id:'az3',category:'Azure (MetLife)',name:'Azure Blob Storage — object/file storage',priority:'metlife',status:'pending',notes:''},
+  {id:'az4',category:'Azure (MetLife)',name:'Azure Cosmos DB — partition keys, RU/s, consistency levels',priority:'metlife',status:'pending',notes:'5 consistency levels: Strong, Bounded Staleness, Session, Consistent Prefix, Eventual'},
+  {id:'az5',category:'Azure (MetLife)',name:'Azure Cache for Redis — managed Redis',priority:'metlife',status:'pending',notes:''},
+  {id:'az6',category:'Azure (MetLife)',name:'Azure Key Vault — secrets, Managed Identity, audit log',priority:'metlife',status:'pending',notes:'Critical for financial compliance'},
+  {id:'az7',category:'Azure (MetLife)',name:'Azure Monitor + Log Analytics + Application Insights',priority:'metlife',status:'pending',notes:'KQL queries: exceptions, requests, dependencies'},
+  {id:'az8',category:'Azure (MetLife)',name:'Azure Service Bus / Event Grid — messaging and events',priority:'metlife',status:'pending',notes:''},
+  {id:'az9',category:'Azure (MetLife)',name:'Azure Active Directory (Entra ID) — identity, RBAC',priority:'metlife',status:'pending',notes:''},
+  {id:'az10',category:'Azure (MetLife)',name:'Azure AI Search (Cognitive Search) — full-text and semantic',priority:'metlife',status:'pending',notes:''},
+  {id:'az11',category:'Azure (MetLife)',name:'AZ-900 Azure Fundamentals certification',priority:'metlife',status:'pending',notes:'Exam cost ~$165. Strongly recommended for MetLife'},
+  // Azure DevOps
+  {id:'ado1',category:'Azure DevOps',name:'Azure DevOps Pipeline — stages, jobs, steps, triggers',priority:'metlife',status:'pending',notes:'azure-pipelines.yml syntax'},
+  {id:'ado2',category:'Azure DevOps',name:'Service Connections — authenticate ADO to Azure subscription',priority:'metlife',status:'pending',notes:''},
+  {id:'ado3',category:'Azure DevOps',name:'Variable Groups — centralized secrets and config values',priority:'metlife',status:'pending',notes:'Reference as $(VAR_NAME)'},
+  {id:'ado4',category:'Azure DevOps',name:'Environments + Approval Gates — staging → production flow',priority:'metlife',status:'pending',notes:'Manual approval gates for production'},
+  {id:'ado5',category:'Azure DevOps',name:'GitHub Actions vs Azure DevOps — key differences',priority:'metlife',status:'pending',notes:'Concepts transfer ~80%'},
+  // GenAI
+  {id:'ai1',category:'GenAI & LLMs',name:'Azure OpenAI API integration in Node.js / NestJS',priority:'metlife',status:'pending',notes:'AzureOpenAI SDK, deployment config'},
+  {id:'ai2',category:'GenAI & LLMs',name:'Prompt Engineering — zero-shot, few-shot, chain-of-thought',priority:'metlife',status:'pending',notes:'Output structuring with JSON mode'},
+  {id:'ai3',category:'GenAI & LLMs',name:'RAG — Retrieval-Augmented Generation pattern',priority:'metlife',status:'pending',notes:'Embed docs → vector search → inject context → LLM'},
+  {id:'ai4',category:'GenAI & LLMs',name:'Embeddings — vector representations for search',priority:'metlife',status:'pending',notes:'text-embedding-ada-002, 1536 dimensions'},
+  {id:'ai5',category:'GenAI & LLMs',name:'Tokens — cost and context window implications',priority:'metlife',status:'pending',notes:'~0.75 words per token'},
+  {id:'ai6',category:'GenAI & LLMs',name:'Temperature — 0 for factual/enterprise, 1+ for creative',priority:'metlife',status:'pending',notes:'Use 0–0.3 for enterprise apps'},
+  {id:'ai7',category:'GenAI & LLMs',name:'LLM hallucination prevention in enterprise apps',priority:'metlife',status:'pending',notes:'RAG, system prompts, output validation'},
+  {id:'ai8',category:'GenAI & LLMs',name:'RAG vs fine-tuning — when to use each',priority:'metlife',status:'pending',notes:'RAG is usually better for enterprise'},
+  {id:'ai9',category:'GenAI & LLMs',name:'Vector databases — pgvector, Pinecone, Qdrant',priority:'high',status:'pending',notes:'Huge for GenAI projects'},
+  {id:'ai10',category:'GenAI & LLMs',name:'LangChain.js / LlamaIndex — AI orchestration frameworks',priority:'high',status:'pending',notes:'2026 emerging standard'},
+  // DevOps
+  {id:'dv1',category:'DevOps & Infrastructure',name:'Docker — multi-stage builds, docker-compose, .dockerignore',priority:'high',status:'pending',notes:'Non-root USER node for security'},
+  {id:'dv2',category:'DevOps & Infrastructure',name:'Kubernetes — Deployments, Services, basic concepts',priority:'medium',status:'pending',notes:''},
+  {id:'dv3',category:'DevOps & Infrastructure',name:'CI/CD with GitHub Actions — test, build, deploy pipeline',priority:'high',status:'pending',notes:''},
+  {id:'dv4',category:'DevOps & Infrastructure',name:'Terraform — IaC, providers, state, Azure infra',priority:'metlife',status:'pending',notes:'terraform init, plan, apply, destroy'},
+  {id:'dv5',category:'DevOps & Infrastructure',name:'Git branching strategies — GitFlow, trunk-based development',priority:'important',status:'pending',notes:''},
+  {id:'dv6',category:'DevOps & Infrastructure',name:'Semantic versioning (semver) + conventional commits',priority:'high',status:'pending',notes:''},
+  {id:'dv7',category:'DevOps & Infrastructure',name:'Monorepo tools — Nx, Turborepo',priority:'medium',status:'pending',notes:'Common in big companies'},
+  // Behavioral
+  {id:'bh1',category:'Behavioral & Soft Skills',name:'STAR Method — Situation, Task, Action, Result with metrics',priority:'critical',status:'pending',notes:'Quantify: reduced latency 40%, saved $50K/year'},
+  {id:'bh2',category:'Behavioral & Soft Skills',name:'Amazon Leadership Principles — all 14 LPs',priority:'critical',status:'pending',notes:''},
+  {id:'bh3',category:'Behavioral & Soft Skills',name:'MetLife Values — Win Together, Do Right, Deliver Impact, Think Ahead',priority:'metlife',status:'pending',notes:'Map STAR stories to each value'},
+  {id:'bh4',category:'Behavioral & Soft Skills',name:'6–8 STAR stories prepared and practiced',priority:'critical',status:'pending',notes:'Production incident, perf improvement, new tech, tight deadline, refactor'},
+  {id:'bh5',category:'Behavioral & Soft Skills',name:'Technical writing — README, ADRs (Architecture Decision Records)',priority:'important',status:'pending',notes:''},
+  {id:'bh6',category:'Behavioral & Soft Skills',name:'Incident postmortem writing — blameless format',priority:'high',status:'pending',notes:''},
+  // Portfolio
+  {id:'pf1',category:'Portfolio Projects',name:'Project 1 — Scalable REST API: NestJS + Prisma + PostgreSQL + Redis + JWT + Azure',priority:'critical',status:'pending',notes:'Add /ai/suggest endpoint with Azure OpenAI'},
+  {id:'pf2',category:'Portfolio Projects',name:'Project 2 — Real-time App: NestJS + Socket.io + Redis Pub/Sub',priority:'important',status:'pending',notes:'Chat rooms or live notifications'},
+  {id:'pf3',category:'Portfolio Projects',name:'Project 3 — Background Jobs: NestJS + BullMQ + Redis + BullBoard dashboard',priority:'important',status:'pending',notes:'Email queue, PDF generation, dead-letter queue'},
+  {id:'pf4',category:'Portfolio Projects',name:'Project 4 — CLI Tool + Streams: handles 1GB+ CSV files',priority:'high',status:'pending',notes:'commander.js + worker threads'},
+  {id:'pf5',category:'Portfolio Projects',name:'All projects deployed with README + architecture diagram',priority:'critical',status:'pending',notes:'Deployed > 10 undeployed repos'},
+];
 
-const HDR = {
-  'Content-Type': 'application/json',
-  'apikey': KEY,
-  'Authorization': 'Bearer ' + KEY,
-  'Prefer': 'return=representation'
-};
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let skills = [], editId = null, cat = 'all', selP = 'critical';
 
-async function api(method, path, body){
-  const opts = { method, headers: {...HDR} };
-  if(body) opts.body = JSON.stringify(body);
-  const res = await fetch(URL + '/rest/v1/' + path, opts);
-  const txt = await res.text();
-  let data = null;
-  try { data = txt ? JSON.parse(txt) : null; } catch(e){}
-  if(!res.ok) throw new Error((data && (data.message || data.hint || data.error)) || ('HTTP ' + res.status));
-  return data;
-}
-
-let skills=[], editId=null, cat='all', selP='critical';
-
-async function load(){
-  sync('busy','syncing...');
+// ─── STORAGE ─────────────────────────────────────────────────────────────────
+async function loadStorage() {
   try {
-    const data = await api('GET','skills?select=*&order=category,created_at');
-    skills = data || [];
-    updateStats(); renderNav(); render();
-    sync('ok','● live');
-    hideErr();
+    const saved = localStorage.getItem('skilltracker2026');
+    if (saved) {
+      skills = JSON.parse(saved);
+    } else {
+      skills = SEED.map(s => ({...s}));
+      persistStorage();
+    }
   } catch(e) {
-    sync('err','● error');
-    showErr(e.message);
+    skills = SEED.map(s => ({...s}));
   }
 }
 
-function sync(cls, txt){ const el=document.getElementById('sync'); el.className='sync-pill '+cls; el.textContent=txt; }
-function showErr(msg){ const el=document.getElementById('errbanner'); el.textContent='Error: '+msg+' — Check Supabase table exists and RLS is disabled (or set to allow all).'; el.classList.add('show'); }
-function hideErr(){ document.getElementById('errbanner').classList.remove('show'); }
-
-function updateStats(){
-  const done=skills.filter(s=>s.status==='done').length, tot=skills.length;
-  const pct=tot?Math.round(done/tot*100):0, C=213.63;
-  document.getElementById('rarc').style.strokeDashoffset = C-(C*pct/100);
-  document.getElementById('rpct').textContent = pct+'%';
-  document.getElementById('rlbl').textContent = done+' / '+tot+' done';
-  document.getElementById('sd').textContent = done;
-  document.getElementById('sr').textContent = tot-done;
-  document.getElementById('sc').textContent = skills.filter(s=>s.priority==='critical'&&s.status!=='done').length;
-  document.getElementById('sp2').textContent = skills.filter(s=>s.status==='in_progress').length;
+function persistStorage() {
+  try {
+    localStorage.setItem('skilltracker2026', JSON.stringify(skills));
+  } catch(e) {
+    console.error('Save failed', e);
+  }
 }
 
-function renderNav(){
-  const cats=['all',...new Set(skills.map(s=>s.category))];
-  document.getElementById('cdl').innerHTML=[...new Set(skills.map(s=>s.category))].map(c=>`<option value="${c}">`).join('');
-  document.getElementById('nav').innerHTML=cats.map(c=>{
-    const arr=c==='all'?skills:skills.filter(s=>s.category===c);
-    const d=arr.filter(s=>s.status==='done').length;
-    return`<div class="nav-item${cat===c?' active':''}" onclick="setCat(${JSON.stringify(c)})">
-      <span class="cn">${c==='all'?'all skills':c}</span>
+// ─── BOOTSTRAP ───────────────────────────────────────────────────────────────
+async function init() {
+  await loadStorage();
+  updateStats(); renderNav(); render();
+}
+
+// ─── STATS ───────────────────────────────────────────────────────────────────
+function updateStats() {
+  const done = skills.filter(s => s.status === 'done').length, tot = skills.length;
+  const pct = tot ? Math.round(done / tot * 100) : 0, C = 226.2;
+  document.getElementById('rarc').style.strokeDashoffset = C - (C * pct / 100);
+  document.getElementById('rpct').textContent = pct + '%';
+  document.getElementById('rlbl').textContent = done + ' / ' + tot + ' done';
+  document.getElementById('sd').textContent = done;
+  document.getElementById('sr').textContent = tot - done;
+  document.getElementById('sc').textContent = skills.filter(s => s.priority === 'critical' && s.status !== 'done').length;
+  document.getElementById('sp2').textContent = skills.filter(s => s.status === 'in_progress').length;
+}
+
+// ─── NAV ─────────────────────────────────────────────────────────────────────
+function renderNav() {
+  const cats = ['all', ...new Set(skills.map(s => s.category))];
+  document.getElementById('cdl').innerHTML = [...new Set(skills.map(s => s.category))].map(c => `<option value="${c}">`).join('');
+  document.getElementById('nav').innerHTML = cats.map(c => {
+    const arr = c === 'all' ? skills : skills.filter(s => s.category === c);
+    const d = arr.filter(s => s.status === 'done').length;
+    const pct = arr.length ? Math.round(d / arr.length * 100) : 0;
+    return `<div class="nav-item${cat === c ? ' active' : ''}" onclick="setCat(${JSON.stringify(c)})">
+      <span class="cn">${c === 'all' ? '⬡ all skills' : c}</span>
       <span class="nav-badge">${d}/${arr.length}</span>
-    </div>`;
+    </div>
+    <div class="nav-prog"><div class="nav-prog-fill" style="width:${pct}%"></div></div>`;
   }).join('');
 }
 
-function setCat(c){ cat=c; renderNav(); render(); }
+function setCat(c) { cat = c; renderNav(); render(); }
 
-function render(){
-  const q=document.getElementById('q').value.toLowerCase();
-  const fp=document.getElementById('fp').value;
-  const fs=document.getElementById('fs').value;
-  const filtered=skills.filter(s=>{
-    if(cat!=='all'&&s.category!==cat) return false;
-    if(q&&!s.name.toLowerCase().includes(q)&&!s.category.toLowerCase().includes(q)) return false;
-    if(fp&&s.priority!==fp) return false;
-    if(fs&&s.status!==fs) return false;
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+function render() {
+  const q = document.getElementById('q').value.toLowerCase();
+  const fp = document.getElementById('fp').value;
+  const fs = document.getElementById('fs').value;
+  const filtered = skills.filter(s => {
+    if (cat !== 'all' && s.category !== cat) return false;
+    if (q && !s.name.toLowerCase().includes(q) && !s.category.toLowerCase().includes(q)) return false;
+    if (fp && s.priority !== fp) return false;
+    if (fs && s.status !== fs) return false;
     return true;
   });
-  const box=document.getElementById('box');
-  if(!filtered.length){
-    box.innerHTML=`<div class="center"><b>Nothing found</b><p>Try a different filter or add a new skill</p></div>`;
+  document.getElementById('cnt').textContent = filtered.length + ' skill' + (filtered.length !== 1 ? 's' : '');
+  const box = document.getElementById('box');
+  if (!filtered.length) {
+    box.innerHTML = `<div class="center"><b style="color:var(--text2)">Nothing found</b><p>Try a different filter or add a new skill</p></div>`;
     return;
   }
-  const byCat={};
-  filtered.forEach(s=>{ (byCat[s.category]=byCat[s.category]||[]).push(s); });
-  box.innerHTML=Object.entries(byCat).map(([c,arr])=>{
-    const d=arr.filter(s=>s.status==='done').length;
-    const pct=Math.round(d/arr.length*100);
-    return`<div class="section">
+  const byCat = {};
+  filtered.forEach(s => { (byCat[s.category] = byCat[s.category] || []).push(s); });
+  box.innerHTML = Object.entries(byCat).map(([c, arr]) => {
+    const d = arr.filter(s => s.status === 'done').length;
+    const pct = Math.round(d / arr.length * 100);
+    const col = pct === 100 ? 'var(--green)' : pct > 50 ? 'var(--accent)' : 'var(--amber)';
+    return `<div class="section">
       <div class="sec-head"><div class="sec-title">${c}</div><div class="sec-meta">${d}/${arr.length} · ${pct}%</div></div>
-      <div class="sec-bar"><div class="sec-bar-fill" style="width:${pct}%"></div></div>
+      <div class="sec-bar"><div class="sec-bar-fill" style="width:${pct}%;background:${col}"></div></div>
       <div class="grid">${arr.map(cardHTML).join('')}</div>
     </div>`;
   }).join('');
 }
 
-const PTAG={critical:'p-critical',important:'p-important',high:'p-high',medium:'p-medium',metlife:'p-metlife'};
+const PTAG = { critical: 'p-critical', important: 'p-important', high: 'p-high', medium: 'p-medium', metlife: 'p-metlife' };
 
-function cardHTML(s){
-  const done=s.status==='done', prog=s.status==='in_progress';
-  const ckIcon=done?'✓':prog?'▶':'';
-  const cls=done?' done':prog?' in_progress':'';
-  const stag=done?`<span class="tag s-done">✓ done</span>`:prog?`<span class="tag s-in_progress">▶ in progress</span>`:'';
-  return`<div class="card${cls}">
-    <button class="ckbtn" title="cycle status" onclick="cycle(${JSON.stringify(s.id)})">${ckIcon}</button>
+function cardHTML(s) {
+  const done = s.status === 'done', prog = s.status === 'in_progress';
+  const ckIcon = done ? '✓' : prog ? '▶' : '';
+  const cls = done ? ' done' : prog ? ' in_progress' : '';
+  const stag = done ? `<span class="tag s-done">✓ done</span>` : prog ? `<span class="tag s-in_progress">▶ in prog</span>` : '';
+  const sid = s.id.replace(/"/g, '&quot;');
+  return `<div class="card${cls}">
+    <button class="ckbtn" title="click to cycle: pending → in progress → done" data-action="cycle" data-id="${sid}">${ckIcon}</button>
     <div class="cbody">
       <div class="cname">${esc(s.name)}</div>
       <div class="ctags">
-        <span class="tag ${PTAG[s.priority]||'p-medium'}">${s.priority}</span>
+        <span class="tag ${PTAG[s.priority] || 'p-medium'}">${s.priority}</span>
         ${stag}
-        ${s.notes?`<span class="tag" style="background:var(--bg4);color:var(--text3)">📝</span>`:''}
+        ${s.notes ? `<span class="tag" style="background:var(--bg4);color:var(--text3);border:1px solid var(--border)">📝</span>` : ''}
       </div>
     </div>
     <div class="cactions">
-      <button class="act" title="edit" onclick="openEdit(${JSON.stringify(s.id)})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-      <button class="act del" title="delete" onclick="del(${JSON.stringify(s.id)})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+      <button class="act" title="edit" data-action="edit" data-id="${sid}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+      <button class="act del" title="delete" data-action="del" data-id="${sid}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
     </div>
   </div>`;
 }
 
-function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
-async function cycle(id){
-  const s=skills.find(x=>x.id===id); if(!s) return;
-  const order=['pending','in_progress','done'];
-  const next=order[(order.indexOf(s.status||'pending')+1)%3];
-  sync('busy','syncing...');
-  try {
-    await api('PATCH',`skills?id=eq.${id}`,{status:next});
-    s.status=next;
-    updateStats(); renderNav(); render();
-    sync('ok','● live');
-    toast(next==='done'?'✓ done!':next==='in_progress'?'▶ in progress':'○ pending','ok');
-  } catch(e){ sync('err','● error'); toast(e.message,'fail'); }
+// ─── CYCLE STATUS ─────────────────────────────────────────────────────────────
+function cycle(id) {
+  const s = skills.find(x => x.id === id); if (!s) return;
+  const order = ['pending', 'in_progress', 'done'];
+  s.status = order[(order.indexOf(s.status || 'pending') + 1) % 3];
+  updateStats(); renderNav(); render();
+  persistStorage();
+  const msg = s.status === 'done' ? '✓ marked done!' : s.status === 'in_progress' ? '▶ in progress' : '○ back to pending';
+  toast(msg, 'ok');
 }
 
-function pickP(el){
-  document.querySelectorAll('#prow .pchip').forEach(o=>o.className='pchip');
-  el.classList.add('on-'+el.dataset.v);
-  selP=el.dataset.v;
+// ─── MODAL ───────────────────────────────────────────────────────────────────
+function pickP(el) {
+  document.querySelectorAll('#prow .pchip').forEach(o => o.className = 'pchip');
+  el.classList.add('on-' + el.dataset.v);
+  selP = el.dataset.v;
 }
 
-function openAdd(){
-  editId=null;
-  document.getElementById('mtitle').textContent='add skill';
-  document.getElementById('bsave').textContent='save skill';
-  document.getElementById('fn').value='';
-  document.getElementById('fcat').value=cat!=='all'?cat:'';
-  document.getElementById('fst').value='pending';
-  document.getElementById('fnotes').value='';
-  selP='critical';
-  document.querySelectorAll('#prow .pchip').forEach(o=>{ o.className='pchip'+(o.dataset.v==='critical'?' on-critical':''); });
+function openAdd() {
+  editId = null;
+  document.getElementById('mtitle').textContent = 'add skill';
+  document.getElementById('bsave').textContent = 'save skill';
+  document.getElementById('fn').value = '';
+  document.getElementById('fcat').value = cat !== 'all' ? cat : '';
+  document.getElementById('fst').value = 'pending';
+  document.getElementById('fnotes').value = '';
+  selP = 'critical';
+  document.querySelectorAll('#prow .pchip').forEach(o => { o.className = 'pchip' + (o.dataset.v === 'critical' ? ' on-critical' : ''); });
   document.getElementById('ov').classList.add('open');
 }
 
-function openEdit(id){
-  const s=skills.find(x=>x.id===id); if(!s) return;
-  editId=id;
-  document.getElementById('mtitle').textContent='edit skill';
-  document.getElementById('bsave').textContent='update';
-  document.getElementById('fn').value=s.name;
-  document.getElementById('fcat').value=s.category;
-  document.getElementById('fst').value=s.status||'pending';
-  document.getElementById('fnotes').value=s.notes||'';
-  selP=s.priority;
-  document.querySelectorAll('#prow .pchip').forEach(o=>{ o.className='pchip'+(o.dataset.v===s.priority?' on-'+s.priority:''); });
+function openEdit(id) {
+  const s = skills.find(x => x.id === id); if (!s) return;
+  editId = id;
+  document.getElementById('mtitle').textContent = 'edit skill';
+  document.getElementById('bsave').textContent = 'update';
+  document.getElementById('fn').value = s.name;
+  document.getElementById('fcat').value = s.category;
+  document.getElementById('fst').value = s.status || 'pending';
+  document.getElementById('fnotes').value = s.notes || '';
+  selP = s.priority;
+  document.querySelectorAll('#prow .pchip').forEach(o => { o.className = 'pchip' + (o.dataset.v === s.priority ? ' on-' + s.priority : ''); });
   document.getElementById('ov').classList.add('open');
 }
 
-function closeM(){ document.getElementById('ov').classList.remove('open'); }
+function closeM() { document.getElementById('ov').classList.remove('open'); }
 
-async function save(){
-  const name=document.getElementById('fn').value.trim();
-  const category=document.getElementById('fcat').value.trim();
-  const status=document.getElementById('fst').value;
-  const notes=document.getElementById('fnotes').value.trim();
-  if(!name||!category){ toast('Name and category required','fail'); return; }
-  const btn=document.getElementById('bsave');
-  btn.disabled=true; sync('busy','syncing...');
-  try {
-    const payload={name,category,priority:selP,status,notes};
-    if(editId){
-      await api('PATCH',`skills?id=eq.${editId}`,payload);
-      toast('Updated!','ok');
-    } else {
-      await api('POST','skills',payload);
-      toast('Added!','ok');
-    }
-    closeM(); await load();
-  } catch(e){ sync('err','● error'); toast(e.message,'fail'); }
-  btn.disabled=false;
+function save() {
+  const name = document.getElementById('fn').value.trim();
+  const category = document.getElementById('fcat').value.trim();
+  const status = document.getElementById('fst').value;
+  const notes = document.getElementById('fnotes').value.trim();
+  if (!name || !category) { toast('Name and category required', 'fail'); return; }
+  const btn = document.getElementById('bsave');
+  btn.disabled = true;
+  if (editId) {
+    const s = skills.find(x => x.id === editId);
+    if (s) { s.name = name; s.category = category; s.priority = selP; s.status = status; s.notes = notes; }
+    toast('Updated!', 'ok');
+  } else {
+    skills.push({ id: 'custom_' + Date.now(), name, category, priority: selP, status, notes });
+    toast('Added!', 'ok');
+  }
+  closeM();
+  updateStats(); renderNav(); render();
+  persistStorage();
+  btn.disabled = false;
 }
 
-async function del(id){
-  if(!confirm('Delete this skill?')) return;
-  sync('busy','syncing...');
-  try {
-    await api('DELETE',`skills?id=eq.${id}`,null);
-    skills=skills.filter(s=>s.id!==id);
-    updateStats(); renderNav(); render();
-    sync('ok','● live'); toast('Deleted','ok');
-  } catch(e){ sync('err','● error'); toast(e.message,'fail'); }
+function del(id) {
+  skills = skills.filter(s => s.id !== id);
+  updateStats(); renderNav(); render();
+  persistStorage();
+  toast('Deleted', 'ok');
 }
 
+// ─── RESET ───────────────────────────────────────────────────────────────────
+function confirmReset() { document.getElementById('ov-confirm').classList.add('open'); }
+function closeConfirm() { document.getElementById('ov-confirm').classList.remove('open'); }
+function doReset() {
+  skills.forEach(s => s.status = 'pending');
+  closeConfirm();
+  updateStats(); renderNav(); render();
+  persistStorage();
+  toast('All progress reset', 'ok');
+}
+
+// ─── TOAST ───────────────────────────────────────────────────────────────────
 let _t;
-function toast(msg,type='ok'){
-  const el=document.getElementById('toast');
-  el.textContent=msg; el.className='toast '+type+' show';
-  clearTimeout(_t); _t=setTimeout(()=>el.classList.remove('show'),2600);
+function toast(msg, type = 'ok') {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = 'toast ' + type + ' show';
+  clearTimeout(_t); _t = setTimeout(() => el.classList.remove('show'), 2500);
 }
 
-document.getElementById('ov').addEventListener('click',e=>{ if(e.target===document.getElementById('ov')) closeM(); });
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeM(); });
+// ─── KEYBOARD ────────────────────────────────────────────────────────────────
+document.getElementById('ov').addEventListener('click', e => { if (e.target === document.getElementById('ov')) closeM(); });
+document.getElementById('ov-confirm').addEventListener('click', e => { if (e.target === document.getElementById('ov-confirm')) closeConfirm(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeM(); closeConfirm(); } });
 
-load();
+// ─── EVENT DELEGATION (fixes onclick quote issues) ───────────────────────────
+document.getElementById('box').addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  const action = btn.dataset.action;
+  const id = btn.dataset.id;
+  if (action === 'cycle') cycle(id);
+  else if (action === 'edit') openEdit(id);
+  else if (action === 'del') { if(confirm('Delete this skill?')) del(id); }
+});
+
+init();
 </script>
 </body>
 </html>
